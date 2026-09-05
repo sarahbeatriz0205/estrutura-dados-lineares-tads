@@ -269,4 +269,8 @@ public class ArvoreBinariaDePesquisa{
         System.out.println();
         }
     }
+
+    protected NoArvore transformarNo(int e){
+        return new NoArvore(null, null, null, e);
+    }
 }

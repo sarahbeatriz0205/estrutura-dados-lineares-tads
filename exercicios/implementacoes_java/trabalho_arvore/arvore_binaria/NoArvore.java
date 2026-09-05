@@ -1,10 +1,10 @@
 package arvore_binaria;
 
 public class NoArvore{
-    private NoArvore filhoEsquerdo;
-    private NoArvore filhoDireito;
-    private NoArvore pai;
-    private int elemento;
+    public NoArvore filhoEsquerdo;
+    public NoArvore filhoDireito;
+    public NoArvore pai;
+    public int elemento;
 
     public NoArvore(NoArvore filhoEsquerdo, NoArvore filhoDireito, NoArvore pai, int o){
         this.filhoEsquerdo = filhoEsquerdo;

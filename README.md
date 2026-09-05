@@ -6,23 +6,25 @@ Este repositório contém as implementações, algoritmos e exercícios desenvol
 
 
 ## Implementações em Java
-- **[TAD Pilha implementado com array armazenando duas pilhas simultâneas](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_pilha)**
-- **[TAD Fila com reversão em O(1)](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_fila)**
-- **[TAD Fila implementado com lista simplesmente encadeada](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/fila_simplesmente_encadeada)**
-- **[TAD Vetor implementado com array e com lista duplamente encadeada](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_vetor)**
-- **[TAD Lista implementado com array e com lista duplamente encadeada](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_lista)**
-- **[TAD Árvore implementado com nós](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_arvore/arvore_generica/Arvore.java)**
-- **[TAD Árvore Binária De Pesquisa implementado com nós](https://github.com/sarahbeatriz0205/estrutura-dados-tads/blob/main/exercicios/implementacoes_java/trabalho_arvore/arvore_binaria/ArvoreBinariaDePesquisa.java)**
-- **[TAD Fila de prioridade implementado com TAD Heap implementado com array](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_heap/heap_array/HeapArray.java)**
-- **[TAD Fila de prioridade implementado com TAD Heap implementado com uma classe Nó](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_heap/heap_nos/HeapNos.java)**
+- **[Pilha implementada com array armazenando duas pilhas simultâneas](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_pilha)**
+- **[Fila com reversão em O(1)](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_fila)**
+- **[Fila implementada com lista encadeada](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/fila_simplesmente_encadeada)**
+- **[Vetor implementado com array e com lista duplamente encadeada](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_vetor)**
+- **[Lista implementada com array e com lista duplamente encadeada](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_lista)**
+- **[Árvore Genérica implementada com nós](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_arvore/arvore_generica/Arvore.java)**
+- **[Árvore Binária De Pesquisa implementada com nós](https://github.com/sarahbeatriz0205/estrutura-dados-tads/blob/main/exercicios/implementacoes_java/trabalho_arvore/arvore_binaria/ArvoreBinariaDePesquisa.java)**
+- **[Fila de prioridade implementada com um Heap implementado com array](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_heap/heap_array/HeapArray.java)**
+- **[Fila de prioridade implementada com um Heap implementado com uma classe Nó](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/exercicios/implementacoes_java/trabalho_heap/heap_nos/HeapNos.java)**
 - **[Dicionário implementado com tabela Hash](https://github.com/sarahbeatriz0205/estrutura-dados-tads/blob/main/exercicios/implementacoes_java/trabalho_dicionario/dicionario_simples/Dicionario.java)**
 - **[Método de ordenação Tree Sort implementado com Árvore Binária de Pesquisa](https://github.com/sarahbeatriz0205/estrutura-dados-tads/blob/main/exercicios/implementacoes_java/trabalho_arvore/arvore_binaria/TreeSort.java)**
+- **[Implementação de Árvore AVL](https://github.com/sarahbeatriz0205/estrutura-dados-tads/blob/main/exercicios/implementacoes_java/trabalho_arvore/arvore_avl/ArvoreAVL.java)**
+
 
 ## Implementações em C#
-- **[TAD Árvore Binária De Pesquisa implementado com nós](https://github.com/sarahbeatriz0205/estrutura-de-dados-tads/blob/main/exercicios/implementacoes_csharp/ArvoreBinariaPesquisa/Program.cs)**
+- **[Árvore Binária De Pesquisa implementada com nós](https://github.com/sarahbeatriz0205/estrutura-de-dados-tads/blob/main/exercicios/implementacoes_csharp/ArvoreBinariaPesquisa/Program.cs)**
 
 ## Anotações
-### EDL
+### Estrutura de Dados Lineares
 - **[TAD Pilha](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/aulas/edl/aulas_pilha)**
 - **[TAD Fila](https://github.com/sarahbeatriz0205/estrutura-dados-tads/blob/main/aulas/edl/aulas_fila/codigo/FilaArray.java)**
 - **[TAD Vetor](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/aulas/edl/aulas_vetor)**
@@ -34,5 +36,6 @@ Este repositório contém as implementações, algoritmos e exercícios desenvol
 - **[TAD Dicionário](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/aulas/edl/aulas_dicionarios)**
 - **[Skiplist](https://github.com/sarahbeatriz0205/estrutura-dados-tads/tree/main/aulas/edl/aulas_skiplist)**
 
-### EDNL
+### Estrutura de Dados Não Lineares
 - **[Árvore AVL](https://github.com/sarahbeatriz0205/estrutura-de-dados-tads/tree/main/aulas/ednl/aulas_arvore_avl)**
+- **[Árvore Rubro-Negra](https://github.com/sarahbeatriz0205/estrutura-de-dados-tads/tree/main/aulas/ednl/aulas_arvore_rb)**
