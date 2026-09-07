@@ -1,6 +1,5 @@
 public class Teste{
-	public static void main(String[] args) {		
-		Integer[] b = new Integer[1];		
+	public static void main(String[] args) {			
 		FilaArray fila=new FilaArray(1,0);
 		System.out.println("TESTANDO A ESTRUTURA FILA FEITA COM ARRAY");		  
 		fila.enqueue(5);

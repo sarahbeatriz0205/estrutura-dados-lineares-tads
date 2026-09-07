@@ -1,10 +1,13 @@
 package arvore_avl;
 import arvore_binaria.ArvoreBinariaDePesquisa;
+import arvore_binaria.NoArvore;
 
 public class ArvoreAVL extends ArvoreBinariaDePesquisa{
 
     public ArvoreAVL(int elemento){
         super(elemento);
+        NoAVL elementoTransformado = transformarNo(elemento);
+        this.raiz = elementoTransformado;
     }
 
     public String rebalancear(NoAVL noDesbalanceado, NoAVL noFilho){
@@ -29,7 +32,7 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         }
     }
 
-    public void atualizaFatorBalanceamentoPosRotacaoEsquerda(NoAVL noDesbalanceado, NoAVL noFilho){
+    public void atualizaFBPosRotacaoEsquerda(NoAVL noDesbalanceado, NoAVL noFilho){
         int fbNoB = noDesbalanceado.getFB();
         int fbNoA = noFilho.getFB();
         int fbNoBNovo= fbNoB + 1 - Math.max(fbNoA, 0);
@@ -38,7 +41,7 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         noFilho.setFB(fbNoANovo);
     }
 
-    public void atualizaFatorBalanceamentoPosRotacaoDireita(NoAVL noDesbalanceado, NoAVL noFilho){
+    public void atualizaFBPosRotacaoDireita(NoAVL noDesbalanceado, NoAVL noFilho){
         int fbNoB = noDesbalanceado.getFB();
         int fbNoA = noFilho.getFB();
         int fbNoBNovo= fbNoB - 1 - Math.max(fbNoA, 0);
@@ -47,30 +50,84 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         noFilho.setFB(fbNoANovo);
     }
 
+    public void atualizaFBPosInsercao(NoAVL no){
+        NoAVL pai = no.getPai();
+
+        // indica que chegou na raiz
+        if (pai == null){
+            return;
+        }
+        
+        if (no.getElemento() < pai.getElemento()){
+            pai.setFB(pai.getFB() + 1);
+        }
+        if (no.getElemento() > pai.getElemento()){
+            pai.setFB(pai.getFB() - 1);
+        }
+        // verifica se precisa de balanceamento
+        if (pai.getFB() == 2){
+            rebalancear(pai, pai.getFilhoEsquerdo());
+            return;
+        }
+        else if (pai.getFB() == -2){
+            rebalancear(pai, pai.getFilhoDireito());
+            return;
+        }
+        // caso base
+        if (pai.getFB() == 0){
+            return;
+        }
+        atualizaFBPosInsercao(pai);
+    }
+
+    public void atualizaFBPosRemocao(NoAVL no){
+        NoAVL pai = no.getPai();
+
+        if (no.getElemento() < pai.getElemento()){
+            pai.setFB(pai.getFB() - 1);
+        }
+        if (no.getElemento() > pai.getElemento()){
+            pai.setFB(pai.getFB() + 1);
+        }
+        // verifica se precisa de balanceamento
+        if (pai.getFB() == 2){
+            rebalancear(pai, pai.getFilhoEsquerdo());
+        }
+        else if (pai.getFB() == -2){
+            rebalancear(pai, pai.getFilhoDireito());
+        }
+        // caso base
+        if (pai.getFB() != 0){
+            return;
+        }
+        atualizaFBPosRemocao(pai);
+    }
+
     private void rotacionaEsquerdaSimples(NoAVL noDesbalanceado, NoAVL noFilho){ 
         if (noFilho.getFilhoEsquerdo() == null && isRoot(noDesbalanceado)){
+            noDesbalanceado.setFilhoDireito(null);
             noFilho.setFilhoEsquerdo(noDesbalanceado);
             noDesbalanceado.setPai(noFilho);
             noFilho.setPai(null);
             this.raiz = noFilho;
-            atualizaFatorBalanceamentoPosRotacaoEsquerda(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoEsquerda(noDesbalanceado, noFilho);
             return;
         }
         else if (!isRoot(noDesbalanceado) && noFilho.getFilhoEsquerdo() != null){
             NoAVL antigoPai = (NoAVL) noDesbalanceado.getPai();
             NoAVL filhoEsq = (NoAVL) noFilho.getFilhoEsquerdo();
             noFilho.setFilhoEsquerdo(noDesbalanceado);
-            if (noDesbalanceado.getElemento() < noDesbalanceado.getPai().getElemento()){
-                noDesbalanceado.getPai().setFilhoEsquerdo(noFilho);
+            if (noDesbalanceado.getElemento() < antigoPai.getElemento()){
+                antigoPai.setFilhoEsquerdo(noFilho);
             }
             else {
-                noDesbalanceado.getPai().setFilhoDireito(noFilho);
+                antigoPai.setFilhoDireito(noFilho);
             }
             noDesbalanceado.setPai(noFilho);
             noDesbalanceado.setFilhoDireito(filhoEsq);
             filhoEsq.setPai(noDesbalanceado);
             noFilho.setPai(antigoPai);
-            atualizaFatorBalanceamentoPosRotacaoEsquerda(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoEsquerda(noDesbalanceado, noFilho);
             return;
         }
         else if(isRoot(noDesbalanceado) && noFilho.getFilhoEsquerdo() != null){
@@ -81,49 +138,51 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
             filhoEsq.setPai(noDesbalanceado);
             noFilho.setPai(null);
             this.raiz = noFilho;
-            atualizaFatorBalanceamentoPosRotacaoEsquerda(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoEsquerda(noDesbalanceado, noFilho);
             return;
         }
         else if (noFilho.getFilhoEsquerdo() == null && !isRoot(noDesbalanceado)){
             NoAVL antigoPai = (NoAVL) noDesbalanceado.getPai();
             noFilho.setFilhoEsquerdo(noDesbalanceado);
-            if (noDesbalanceado.getElemento() < noDesbalanceado.getPai().getElemento()){
-                noDesbalanceado.getPai().setFilhoEsquerdo(noFilho);
+            if (noDesbalanceado.getElemento() < antigoPai.getElemento()){
+                antigoPai.setFilhoEsquerdo(noFilho);
             }
             else {
-                noDesbalanceado.getPai().setFilhoDireito(noFilho);
+                antigoPai.setFilhoDireito(noFilho);
             }
+            noDesbalanceado.setFilhoDireito(null);
             noDesbalanceado.setPai(noFilho);
             noFilho.setPai(antigoPai);
-            atualizaFatorBalanceamentoPosRotacaoEsquerda(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoEsquerda(noDesbalanceado, noFilho);
             return;
         }
     }
 
     private void rotacionaDireitaSimples(NoAVL noDesbalanceado, NoAVL noFilho){ 
         if (noFilho.getFilhoDireito() == null && isRoot(noDesbalanceado)){
+            noDesbalanceado.setFilhoEsquerdo(null);
             noFilho.setFilhoDireito(noDesbalanceado);
             noDesbalanceado.setPai(noFilho);
             noFilho.setPai(null);
             this.raiz = noFilho;
-            atualizaFatorBalanceamentoPosRotacaoDireita(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoDireita(noDesbalanceado, noFilho);
             return;
         }
         else if (!isRoot(noDesbalanceado) && noFilho.getFilhoDireito() != null){
             NoAVL antigoPai = (NoAVL) noDesbalanceado.getPai();
             NoAVL filhoDir = (NoAVL) noFilho.getFilhoDireito();
             noFilho.setFilhoDireito(noDesbalanceado);
-            if (noDesbalanceado.getElemento() < noDesbalanceado.getPai().getElemento()){
-                noDesbalanceado.getPai().setFilhoEsquerdo(noFilho);
+            if (noDesbalanceado.getElemento() < antigoPai.getElemento()){
+                antigoPai.setFilhoEsquerdo(noFilho);
             }
             else {
-                noDesbalanceado.getPai().setFilhoDireito(noFilho);
+                antigoPai.setFilhoDireito(noFilho);
             }
             noDesbalanceado.setPai(noFilho);
             noDesbalanceado.setFilhoEsquerdo(filhoDir);
             filhoDir.setPai(noDesbalanceado);
             noFilho.setPai(antigoPai);
-            atualizaFatorBalanceamentoPosRotacaoDireita(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoDireita(noDesbalanceado, noFilho);
             return;
         }
         else if(isRoot(noDesbalanceado) && noFilho.getFilhoDireito() != null){
@@ -134,21 +193,21 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
             filhoDir.setPai(noDesbalanceado);
             noFilho.setPai(null);
             this.raiz = noFilho;
-            atualizaFatorBalanceamentoPosRotacaoDireita(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoDireita(noDesbalanceado, noFilho);
             return;
         }
         else if (noFilho.getFilhoDireito() == null && !isRoot(noDesbalanceado)){
             NoAVL antigoPai = (NoAVL) noDesbalanceado.getPai();
             noFilho.setFilhoDireito(noDesbalanceado);
-            if (noDesbalanceado.getElemento() < noDesbalanceado.getPai().getElemento()){
-                noDesbalanceado.getPai().setFilhoEsquerdo(noFilho);
+            if (noDesbalanceado.getElemento() < antigoPai.getElemento()){
+                antigoPai.setFilhoEsquerdo(noFilho);
             }
             else {
-                noDesbalanceado.getPai().setFilhoDireito(noFilho);
+                antigoPai.setFilhoDireito(noFilho);
             }
             noDesbalanceado.setPai(noFilho);
             noFilho.setPai(antigoPai);
-            atualizaFatorBalanceamentoPosRotacaoDireita(noDesbalanceado, noFilho);
+            atualizaFBPosRotacaoDireita(noDesbalanceado, noFilho);
             return;
         }
     }
@@ -161,11 +220,38 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
     private void rotacionaDireitaDupla(NoAVL noDesbalanceado, NoAVL noFilho){ 
         rotacionaEsquerdaSimples(noFilho, noFilho.getFilhoEsquerdo());
         rotacionaDireitaSimples(noDesbalanceado, noFilho);
-        atualizaFatorBalanceamentoPosRotacaoDireita(noDesbalanceado, noFilho);
     }
 
     @Override
     protected NoAVL transformarNo(int e){
         return new NoAVL(null, null, null, e);
+    }
+
+    @Override 
+    public NoAVL insert(int e, NoArvore no){
+        NoAVL novo = (NoAVL) super.insert(e, no);
+        atualizaFBPosInsercao(novo);
+        return novo;
+    }
+
+    @Override 
+    public int remove(NoArvore no){
+        int elemento = no.getElemento();
+        if (no.getFilhoDireito() != null &&  no.getFilhoEsquerdo() != null){
+            NoAVL sucessor = (NoAVL) no.getFilhoDireito();
+            while (sucessor.getFilhoEsquerdo() != null) {
+                sucessor = sucessor.getFilhoEsquerdo();
+            }
+            int temp = sucessor.getElemento();
+            super.remove(sucessor);
+            no.setElemento(temp);
+            atualizaFBPosRemocao((NoAVL) sucessor);
+            return elemento;
+        }
+        NoAVL ref = (NoAVL) no;
+        NoAVL copia = new NoAVL(ref.getFilhoEsquerdo(), ref.getFilhoDireito(), ref.getPai(), ref.getElemento());
+        super.remove(no);
+        atualizaFBPosRemocao((NoAVL) copia);
+        return elemento;
     }
 }

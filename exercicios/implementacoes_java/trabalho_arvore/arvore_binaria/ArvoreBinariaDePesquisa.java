@@ -167,13 +167,14 @@ public class ArvoreBinariaDePesquisa{
         return v;
     }
 
-    public void insert(int k, NoArvore v) throws ArvoreExcecao{
+    public NoArvore insert(int k, NoArvore v) throws ArvoreExcecao{
         NoArvore encontrado = search(k, v);
         if (encontrado.getElemento() == k){
             throw new ArvoreExcecao("Erro! Nó já existente");
         }
 
-        NoArvore novo = new NoArvore(null, null, encontrado, k);
+        NoArvore novo = transformarNo(k);
+        novo.setPai(encontrado);
 
         if (novo.getElemento() < encontrado.getElemento()){
             encontrado.setFilhoEsquerdo(novo);
@@ -183,6 +184,7 @@ public class ArvoreBinariaDePesquisa{
         }
         this.nos.add(novo);
         this.size++;
+        return novo;
     } 
 
     public int remove(NoArvore v){
