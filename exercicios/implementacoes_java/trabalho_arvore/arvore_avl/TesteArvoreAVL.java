@@ -5,71 +5,33 @@ import arvore_binaria.NoArvore;
 public class TesteArvoreAVL {
 
     public static void main(String[] args) {
+        ArvoreAVL arvore = new ArvoreAVL(10);
 
-        ArvoreAVL arvore = new ArvoreAVL(30);
+        System.out.println("Teste - Árvore AVL");
+        System.out.println("Exemplo de AVL - método mostrar (com as chaves e FB de cada nó)");
 
-        System.out.println("=================================");
-        System.out.println("       TESTE DA ÁRVORE AVL");
-        System.out.println("=================================");
+        arvore.insert(5, arvore.raiz);
+        arvore.insert(15, arvore.raiz);
+        arvore.insert(2, arvore.raiz);
+        arvore.insert(8, arvore.raiz);
+        arvore.insert(22, arvore.raiz);
 
-        System.out.println("\nÁrvore inicial:");
+        System.out.println("\nA árvore abaixo foi resultado de várias inserções e/ou remoções, USANDO O MÉTODO MOSTRAR.");
         arvore.imprimirArvore();
-
-        System.out.println("\nInserindo 20:");
-        arvore.insert(20, arvore.raiz);
-        arvore.imprimirArvore();
-
-        System.out.println("\nInserindo 10:");
-        arvore.insert(10, arvore.raiz);
-        arvore.imprimirArvore();
-
-        System.out.println("\nInserindo 40:");
-        arvore.insert(40, arvore.raiz);
-        arvore.imprimirArvore();
-
-        System.out.println("\nInserindo 50:");
-        arvore.insert(50, arvore.raiz);
-        arvore.imprimirArvore();
-
-        System.out.println("\nInserindo 25:");
+        
+        System.out.println("\nContinuando a inserir e/ou remover");
+        System.out.println("Inserir 25");
         arvore.insert(25, arvore.raiz);
+        
+        System.out.println("\nÁrvore depois da inserção do 25 + rotação S.E. em 15");
         arvore.imprimirArvore();
 
-        System.out.println("\n=================================");
-        System.out.println("             BUSCA");
-        System.out.println("=================================");
-
-        System.out.println("\nBuscando 25:");
-        NoArvore no = arvore.search(25, arvore.raiz);
-        System.out.println("Nó encontrado: " + no.getElemento());
-
-        System.out.println("\nBuscando 50:");
-        no = arvore.search(50, arvore.raiz);
-        System.out.println("Nó encontrado: " + no.getElemento());
-
-        System.out.println("\nBuscando 100:");
-        no = arvore.search(100, arvore.raiz);
-
-        if (no.getElemento() == 100) {
-            System.out.println("Nó encontrado: " + no.getElemento());
-        } else {
-            System.out.println("Nó não encontrado.");
+        System.out.println("\nremover 5");
+        // Buscamos o nó 5 primeiro para poder passar para o método de remoção
+        NoArvore noParaRemover = arvore.search(5, arvore.raiz);
+        if (noParaRemover != null) {
+            arvore.remove(noParaRemover);
         }
-
-        System.out.println("\n=================================");
-        System.out.println("            REMOÇÃO");
-        System.out.println("=================================");
-
-        no = arvore.search(10, arvore.raiz);
-
-        System.out.println("\nRemovendo 10:");
-        arvore.remove(no);
-        arvore.imprimirArvore();
-
-        no = arvore.search(40, arvore.raiz);
-
-        System.out.println("\nRemovendo 40:");
-        arvore.remove(no);
         arvore.imprimirArvore();
     }
 }

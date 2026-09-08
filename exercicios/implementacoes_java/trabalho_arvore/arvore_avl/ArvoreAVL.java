@@ -32,16 +32,16 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         }
     }
 
-    public void atualizaFBPosRotacaoEsquerda(NoAVL noDesbalanceado, NoAVL noFilho){
+    private void atualizaFBPosRotacaoEsquerda(NoAVL noDesbalanceado, NoAVL noFilho){
         int fbNoB = noDesbalanceado.getFB();
         int fbNoA = noFilho.getFB();
-        int fbNoBNovo= fbNoB + 1 - Math.max(fbNoA, 0);
-        int fbNoANovo= fbNoA + 1 + Math.min(fbNoBNovo, 0);
+        int fbNoBNovo= fbNoB + 1 - Math.min(fbNoA, 0);
+        int fbNoANovo= fbNoA + 1 + Math.max(fbNoBNovo, 0);
         noDesbalanceado.setFB(fbNoBNovo);
         noFilho.setFB(fbNoANovo);
     }
 
-    public void atualizaFBPosRotacaoDireita(NoAVL noDesbalanceado, NoAVL noFilho){
+    private void atualizaFBPosRotacaoDireita(NoAVL noDesbalanceado, NoAVL noFilho){
         int fbNoB = noDesbalanceado.getFB();
         int fbNoA = noFilho.getFB();
         int fbNoBNovo= fbNoB - 1 - Math.max(fbNoA, 0);
@@ -50,7 +50,7 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         noFilho.setFB(fbNoANovo);
     }
 
-    public void atualizaFBPosInsercao(NoAVL no){
+    private void atualizaFBPosInsercao(NoAVL no){
         NoAVL pai = no.getPai();
 
         // indica que chegou na raiz
@@ -61,7 +61,7 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         if (no.getElemento() < pai.getElemento()){
             pai.setFB(pai.getFB() + 1);
         }
-        if (no.getElemento() > pai.getElemento()){
+        else {
             pai.setFB(pai.getFB() - 1);
         }
         // verifica se precisa de balanceamento
@@ -80,13 +80,18 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
         atualizaFBPosInsercao(pai);
     }
 
-    public void atualizaFBPosRemocao(NoAVL no){
+    private void atualizaFBPosRemocao(NoAVL no){
         NoAVL pai = no.getPai();
+
+        // indica que chegou na raiz
+        if (pai == null){
+            return;
+        }
 
         if (no.getElemento() < pai.getElemento()){
             pai.setFB(pai.getFB() - 1);
         }
-        if (no.getElemento() > pai.getElemento()){
+        else {
             pai.setFB(pai.getFB() + 1);
         }
         // verifica se precisa de balanceamento
@@ -225,6 +230,33 @@ public class ArvoreAVL extends ArvoreBinariaDePesquisa{
     @Override
     protected NoAVL transformarNo(int e){
         return new NoAVL(null, null, null, e);
+    }
+
+    @Override
+    protected void preencherMatriz(NoArvore no, String[][] matriz, int linha, int coluna, int deslocamento){
+        NoAVL noTransformado = (NoAVL) no;
+        if (no == null || linha >= matriz.length || coluna < 0 || coluna >= matriz[0].length) return;
+        if (deslocamento < 1) deslocamento = 1;
+        
+        String elementoComFB = noTransformado.getElemento() + " " + "[" + noTransformado.getFB() + "]";
+
+        matriz[linha][coluna] = elementoComFB;
+
+        preencherMatriz(
+            no.getFilhoEsquerdo(),
+            matriz,
+            linha + 1,
+            coluna - deslocamento,
+            deslocamento / 2
+        );
+
+        preencherMatriz(
+            no.getFilhoDireito(),
+            matriz,
+            linha + 1,
+            coluna + deslocamento,
+            deslocamento / 2
+        );
     }
 
     @Override 

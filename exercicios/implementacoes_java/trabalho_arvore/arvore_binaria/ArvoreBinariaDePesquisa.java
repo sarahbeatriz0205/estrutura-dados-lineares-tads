@@ -231,11 +231,12 @@ public class ArvoreBinariaDePesquisa{
         return element;
     }
 
-    private void preencherMatriz(NoArvore no, int[][] matriz, int linha, int coluna, int deslocamento){
+    protected void preencherMatriz(NoArvore no, String[][] matriz, int linha, int coluna, int deslocamento){
         if (no == null || linha >= matriz.length || coluna < 0 || coluna >= matriz[0].length) return;
         if (deslocamento < 1) deslocamento = 1;
         
-        matriz[linha][coluna] = no.getElemento();
+        String elemento = String.valueOf(no.getElemento());
+        matriz[linha][coluna] = elemento;
 
         preencherMatriz(
             no.getFilhoEsquerdo(),
@@ -260,13 +261,13 @@ public class ArvoreBinariaDePesquisa{
     int linhas  = h + 1;
     int colunas = (int)Math.pow(2, h + 2) - 1;
 
-    int[][] matriz = new int[linhas][colunas];
+    String[][] matriz = new String[linhas][colunas];
     preencherMatriz(this.raiz, matriz, 0, colunas / 2, colunas / 4);
 
     for (int i = 0; i < linhas; i++) {
         for (int j = 0; j < colunas; j++) {
-            if (matriz[i][j] == 0) System.out.print("    ");
-            else                   System.out.printf("%4d", matriz[i][j]);
+            if (matriz[i][j] == null) System.out.print("    ");
+            else                   System.out.printf("%4s", matriz[i][j]);
         }
         System.out.println();
         }
